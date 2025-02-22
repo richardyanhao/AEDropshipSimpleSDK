@@ -4,19 +4,19 @@ package ds.ae.richard.simplesdk.api.system;
  * @author Richard Yan
  * @date 2025/2/20 00:21
  */
-import com.google.gson.Gson;
-import ds.ae.richard.simplesdk.api.ApiClient;
-import ds.ae.richard.simplesdk.api.ApiException;
-import ds.ae.richard.simplesdk.api.ApiResponse;
-import ds.ae.richard.simplesdk.config.ConfigManager;
-import ds.ae.richard.simplesdk.utils.SignatureUtil;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import ds.ae.richard.simplesdk.api.ApiClient;
+import ds.ae.richard.simplesdk.api.ApiException;
+import ds.ae.richard.simplesdk.api.ApiResponse;
+import ds.ae.richard.simplesdk.config.ConfigManager;
+import ds.ae.richard.simplesdk.utils.SignatureUtil;
 import static ds.ae.richard.simplesdk.utils.Constants.BASE_URL_FOR_SYSTEM;
+
+import com.google.gson.Gson;
 
 public class SystemApi {
 
