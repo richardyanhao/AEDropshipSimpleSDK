@@ -2,7 +2,7 @@ package ds.ae.richard.simplesdk.api;
 
 import ds.ae.richard.simplesdk.api.business.BusinessApi;
 import ds.ae.richard.simplesdk.api.system.SystemApi;
-import ds.ae.richard.simplesdk.api.system.TokenResponse;
+import ds.ae.richard.simplesdk.model.TokenResponse;
 
 /**
  * @author Richard Yan
@@ -49,7 +49,11 @@ public class AeDropShipperClient {
      * @throws ApiException
      */
     public String getProductDetails(String accessToken, String productId, String shipToCountry,
-        String targetCurrency, String targetLanguage, boolean removePersonalBenefit) throws ApiException {
+        String targetCurrency, String targetLanguage, boolean removePersonalBenefit) throws Exception {
         return businessApi.getProductDetails(accessToken, productId, shipToCountry, targetCurrency, targetLanguage, removePersonalBenefit);
+    }
+
+    public String queryFreight(String accessToken, String queryDeliveryReq) throws Exception {
+        return businessApi.queryFreight(accessToken, queryDeliveryReq);
     }
 }

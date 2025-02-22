@@ -2,9 +2,11 @@ package ds.ae.richard.simplesdk.api;
 
 import java.io.IOException;
 import java.net.URI;
+import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -30,6 +32,8 @@ public class ApiClient {
     public ApiResponse get(String url, Map<String, String> params) throws ApiException {
         try {
             String fullUrl = url + "?" + encodeParams(params);
+
+            System.out.println(fullUrl);
             HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(fullUrl))
                 .GET()
@@ -75,7 +79,17 @@ public class ApiClient {
     private String encodeParams(Map<String, String> params) {
         return params.entrySet()
             .stream()
-            .map(entry -> entry.getKey() + "=" + entry.getValue())
+            .map(entry -> {
+                try {
+                    return entry.getKey() + "=" + urlEncode(entry.getValue());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            })
             .collect(Collectors.joining("&"));
+    }
+
+    private String urlEncode(String value) throws IOException {
+        return URLEncoder.encode(value, StandardCharsets.UTF_8.toString());
     }
 }

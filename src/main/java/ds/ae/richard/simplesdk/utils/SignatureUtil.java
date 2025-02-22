@@ -9,32 +9,53 @@ import javax.crypto.spec.SecretKeySpec;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
+import java.util.Arrays;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class SignatureUtil {
 
-    public static String generateSignature(String apiPath, Map<String, String> params, String appSecret) throws IOException {
-        // Sort parameters
-        String concatenatedString = params.entrySet().stream()
-            .sorted(Map.Entry.comparingByKey())
-            .map(entry -> entry.getKey() + entry.getValue())
-            .collect(Collectors.joining());
+    public static final String CHARSET_UTF8 = "UTF-8";
+    public static final String SIGN_METHOD_HMAC_SHA256 = "HmacSHA256";
 
-        // Concatenate API path
-        String stringToSign = apiPath + concatenatedString;
+    public static String generateSignature(Map<String, String> params, String appSecret, String apiName, String clientId) throws IOException {
+        String timeStamp = String.valueOf(System.currentTimeMillis());
+        params.put("sign_method", "sha256");
+        params.put("timestamp", timeStamp);
+        params.put("app_key", clientId);
 
-        // Sign the whole request
-        byte[] bytes = encryptHMACSHA256(stringToSign, appSecret);
+        boolean isSystemInterface = apiName.equals(Constants.TOKEN_CREATE_API) || apiName.equals(Constants.TOKEN_REFRESH_API);
 
-        // Convert to upper-case hexadecimal string
+        // 如果是业务接口，将apiName作为method参数
+        if (!isSystemInterface) {
+            params.put("method", apiName);
+        }
+
+        // 对所有键进行排序
+        String[] keys = params.keySet().toArray(new String[0]);
+        Arrays.sort(keys);
+
+        // 连接所有键值对
+        StringBuilder query = new StringBuilder();
+        if (isSystemInterface) {
+            // 系统接口在最前面加apiName
+            query.append(apiName);
+        }
+        for (String key : keys) {
+            String value = params.get(key);
+            if (areNotEmpty(key, value)) {
+                query.append(key).append(value);
+            }
+        }
+
+        // 签署请求
+        byte[] bytes = encryptHMACSHA256(query.toString(), appSecret);
         return byte2hex(bytes).toUpperCase();
     }
 
     private static byte[] encryptHMACSHA256(String data, String secret) throws IOException {
         try {
-            SecretKeySpec secretKey = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
-            Mac mac = Mac.getInstance("HmacSHA256");
+            SecretKeySpec secretKey = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), SIGN_METHOD_HMAC_SHA256);
+            Mac mac = Mac.getInstance(SIGN_METHOD_HMAC_SHA256);
             mac.init(secretKey);
             return mac.doFinal(data.getBytes(StandardCharsets.UTF_8));
         } catch (GeneralSecurityException gse) {
@@ -49,8 +70,12 @@ public class SignatureUtil {
             if (hex.length() == 1) {
                 sign.append("0");
             }
-            sign.append(hex);
+            sign.append(hex.toUpperCase());
         }
         return sign.toString();
+    }
+
+    private static boolean areNotEmpty(String key, String value) {
+        return key != null && value != null && !key.isEmpty() && !value.isEmpty();
     }
 }

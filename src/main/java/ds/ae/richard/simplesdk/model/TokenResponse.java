@@ -1,13 +1,10 @@
-package ds.ae.richard.simplesdk.api.system;
+package ds.ae.richard.simplesdk.model;
 
 /**
  * @author Richard Yan
  * @date 2025/2/20 00:32
  */
 import com.google.gson.annotations.SerializedName;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 public class TokenResponse {
 

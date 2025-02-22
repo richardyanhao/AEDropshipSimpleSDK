@@ -1,8 +1,11 @@
 package ds.ae.richard.simplesdk.api.business;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import ds.ae.richard.simplesdk.api.ApiClient;
@@ -31,49 +34,44 @@ public class BusinessApi {
         this.gson = new Gson();
     }
 
-    // 商品详情接口
+    // 获取商品详情
     public String getProductDetails(String accessToken, String productId, String shipToCountry,
-        String targetCurrency, String targetLanguage, boolean removePersonalBenefit) throws ApiException {
-        String apiPath = "aliexpress.ds.product.get";
-        String timeStamp = String.valueOf(System.currentTimeMillis());
-
-        // Populate parameters
+        String targetCurrency, String targetLanguage, boolean removePersonalBenefit) throws Exception {
         Map<String, String> params = new HashMap<>();
-        params.put("app_key", clientId);
-        params.put("timestamp", timeStamp);
-        params.put("access_token", accessToken);
-        params.put("sign_method", "sha256");
         params.put("ship_to_country", shipToCountry);
         params.put("product_id", productId);
         params.put("target_currency", targetCurrency);
         params.put("target_language", targetLanguage);
         params.put("remove_personal_benefit", String.valueOf(removePersonalBenefit));
 
+        return executeBusinessRequest("aliexpress.ds.product.get", accessToken, params);
+    }
+
+    // 查询物流信息
+    public String queryFreight(String accessToken, String queryDeliveryReq) throws Exception {
+        Map<String, String> params = new HashMap<>();
+        params.put("queryDeliveryReq", queryDeliveryReq);
+
+        return executeBusinessRequest("aliexpress.ds.freight.query", accessToken, params);
+    }
+
+    private String executeBusinessRequest(String apiPath, String accessToken, Map<String, String> additionalParams) throws ApiException {
         try {
-            // Generate signature
-            String signature = SignatureUtil.generateSignature(apiPath, params, clientSecret);
 
-            // Add signature to parameters
-            params.put("sign", signature);
+            additionalParams.put("session", accessToken);
+            additionalParams.put("format", "json");
+            // 生成签名
+            String sign = SignatureUtil.generateSignature(additionalParams, clientSecret, apiPath, clientId);
+            additionalParams.put("sign", sign);
 
-            // Prepare query string
-            String queryParams = params.entrySet().stream()
-                .map(entry -> entry.getKey() + "=" + entry.getValue())
-                .collect(Collectors.joining("&"));
-
-            // Form the full URL
-            String fullUrl = Constants.BASE_URL_FOR_BUSINESS + "?method=" + apiPath + "&" + queryParams;
-
-            // Send HTTP POST request using ApiClient
-            ApiResponse response = apiClient.post(fullUrl, params);
+            ApiResponse response = apiClient.get(Constants.BASE_URL_FOR_BUSINESS, additionalParams);
             if (response.getStatusCode() == 200) {
-                // Assuming the response is a JSON string, returning it directly
                 return response.getBody();
             } else {
-                throw new ApiException("Failed to get product details, status code: " + response.getStatusCode(), null);
+                throw new ApiException("Failed to execute business request, status code: " + response.getStatusCode(), null);
             }
         } catch (IOException e) {
-            throw new ApiException("Error generating product details request", e);
+            throw new ApiException("Error executing business request", e);
         }
     }
 }

@@ -13,6 +13,7 @@ import ds.ae.richard.simplesdk.api.ApiClient;
 import ds.ae.richard.simplesdk.api.ApiException;
 import ds.ae.richard.simplesdk.api.ApiResponse;
 import ds.ae.richard.simplesdk.config.ConfigManager;
+import ds.ae.richard.simplesdk.model.TokenResponse;
 import ds.ae.richard.simplesdk.utils.SignatureUtil;
 import static ds.ae.richard.simplesdk.utils.Constants.BASE_URL_FOR_SYSTEM;
 
@@ -34,30 +35,27 @@ public class SystemApi {
 
     public TokenResponse createToken(String code) throws ApiException {
         String apiPath = "/auth/token/create";
-        return executeTokenRequest(apiPath, Map.of("code", code));
+        Map<String, String> param = new HashMap<>(){{
+           put("code", code);
+        }};
+        return executeTokenRequest(apiPath, param);
     }
 
     public TokenResponse refreshToken(String refreshToken) throws ApiException {
         String apiPath = "/auth/token/refresh";
-        return executeTokenRequest(apiPath, Map.of("refresh_token", refreshToken));
+        Map<String, String> param = new HashMap<>(){{
+            put("refresh_token", refreshToken);
+        }};
+        return executeTokenRequest(apiPath, param);
     }
 
     private TokenResponse executeTokenRequest(String apiPath, Map<String, String> additionalParams) throws ApiException {
-        String timeStamp = String.valueOf(System.currentTimeMillis());
-
-        // Populate parameters
-        Map<String, String> params = new HashMap<>();
-        params.put("app_key", clientId);
-        params.put("timestamp", timeStamp);
-        params.put("sign_method", "sha256");
-        params.putAll(additionalParams);
-
         try {
             // Generate signature
-            String signature = SignatureUtil.generateSignature(apiPath, params, clientSecret);
+            String signature = SignatureUtil.generateSignature(additionalParams, clientSecret, apiPath, clientId);
 
             // Assemble HTTP request URL
-            String queryParams = params.entrySet().stream()
+            String queryParams = additionalParams.entrySet().stream()
                 .map(entry -> entry.getKey() + "=" + entry.getValue())
                 .collect(Collectors.joining("&"));
             String fullUrl = BASE_URL_FOR_SYSTEM + apiPath + "?" + queryParams + "&sign=" + signature;
@@ -71,27 +69,6 @@ public class SystemApi {
             }
         } catch (IOException e) {
             throw new ApiException("Error generating token request", e);
-        }
-    }
-
-    public static void main(String[] args) {
-        try {
-            SystemApi systemApi = new SystemApi();
-            String authorizationCode = "3_509450_NRGb2iY0iB7ju5tEjbuNEXFI869";
-            TokenResponse tokenResponse = systemApi.createToken(authorizationCode);
-            System.out.println("Create Token Access Token: " + tokenResponse.getAccessToken());
-            System.out.println("Create Token Refresh Token: " + tokenResponse.getRefreshToken());
-            System.out.println("Create Token expire_time: " + tokenResponse.getExpireTime());
-            System.out.println("Create Token refresh_token_valid_time: " + tokenResponse.getRefreshTokenValidTime());
-
-            TokenResponse refreshTokenResponse = systemApi.refreshToken(tokenResponse.getRefreshToken());
-            System.out.println("Create Token Access Token: " + refreshTokenResponse.getAccessToken());
-            System.out.println("Create Token Refresh Token: " + refreshTokenResponse.getRefreshToken());
-            System.out.println("Create Token expire_time: " + refreshTokenResponse.getExpireTime() );
-            System.out.println("Create Token refresh_token_valid_time: " + refreshTokenResponse.getRefreshTokenValidTime());
-
-        } catch (ApiException e) {
-            e.printStackTrace();
         }
     }
 }

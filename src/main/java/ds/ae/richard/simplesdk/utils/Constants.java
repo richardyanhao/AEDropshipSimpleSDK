@@ -11,4 +11,7 @@ public class Constants {
 
     public static final String BASE_URL_FOR_SYSTEM = "https://api-sg.aliexpress.com/rest";
     public static final String BASE_URL_FOR_BUSINESS = "https://api-sg.aliexpress.com/sync";
+
+    public static final String TOKEN_CREATE_API = "/auth/token/create";
+    public static final String TOKEN_REFRESH_API = "/auth/token/refresh";
 }
