@@ -8,12 +8,26 @@
         <version>3.4.2</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>ds.ae.richard</groupId>
+    <groupId>io.github.richardyanhao</groupId>
     <artifactId>simple-sdk</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>simple-sdk</name>
     <description>simple-sdk</description>
     <url/>
+    <licenses>
+        <license>
+            <name>The Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <id>your-id</id>
+            <name>Richard Yanhao</name>
+            <email>yanhaorichard@gmail.com</email>
+        </developer>
+    </developers>
     <properties>
         <java.version>17</java.version>
     </properties>
