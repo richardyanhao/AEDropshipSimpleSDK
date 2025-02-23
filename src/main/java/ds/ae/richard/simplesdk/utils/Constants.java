@@ -12,6 +12,13 @@ public class Constants {
     public static final String BASE_URL_FOR_SYSTEM = "https://api-sg.aliexpress.com/rest";
     public static final String BASE_URL_FOR_BUSINESS = "https://api-sg.aliexpress.com/sync";
 
-    public static final String TOKEN_CREATE_API = "/auth/token/create";
-    public static final String TOKEN_REFRESH_API = "/auth/token/refresh";
+    public static final String API_TOKEN_CREATE = "/auth/token/create";
+    public static final String API_TOKEN_REFRESH = "/auth/token/refresh";
+
+    // Business API Endpoints
+    public static final String API_PRODUCT_DETAIL = "aliexpress.ds.product.get";
+    public static final String API_FREIGHT_QUERY = "aliexpress.ds.freight.query";
+    public static final String API_CREATE_ORDER = "aliexpress.ds.order.create";
+    public static final String API_QUERY_ORDER = "aliexpress.trade.ds.order.get";
+    public static final String API_QUERY_ORDER_TRACKING = "aliexpress.ds.order.tracking.get";
 }

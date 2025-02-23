@@ -23,7 +23,7 @@ public class SignatureUtil {
         params.put("timestamp", timeStamp);
         params.put("app_key", clientId);
 
-        boolean isSystemInterface = apiName.equals(Constants.TOKEN_CREATE_API) || apiName.equals(Constants.TOKEN_REFRESH_API);
+        boolean isSystemInterface = apiName.equals(Constants.API_TOKEN_CREATE) || apiName.equals(Constants.API_TOKEN_REFRESH);
 
         // 如果是业务接口，将apiName作为method参数
         if (!isSystemInterface) {

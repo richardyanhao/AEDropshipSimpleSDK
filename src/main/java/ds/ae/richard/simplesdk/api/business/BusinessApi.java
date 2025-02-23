@@ -44,7 +44,7 @@ public class BusinessApi {
         params.put("target_language", targetLanguage);
         params.put("remove_personal_benefit", String.valueOf(removePersonalBenefit));
 
-        return executeBusinessRequest("aliexpress.ds.product.get", accessToken, params);
+        return executeBusinessRequest(Constants.API_PRODUCT_DETAIL, accessToken, params);
     }
 
     // 查询物流信息
@@ -52,7 +52,7 @@ public class BusinessApi {
         Map<String, String> params = new HashMap<>();
         params.put("queryDeliveryReq", queryDeliveryReq);
 
-        return executeBusinessRequest("aliexpress.ds.freight.query", accessToken, params);
+        return executeBusinessRequest(Constants.API_FREIGHT_QUERY, accessToken, params);
     }
 
     // 创建订单
@@ -61,7 +61,7 @@ public class BusinessApi {
         params.put("ds_extend_request", dsExtendRequest);
         params.put("param_place_order_request4_open_api_d_t_o", paramPlaceOrderRequest);
 
-        return executeBusinessRequest("aliexpress.ds.order.create", accessToken, params);
+        return executeBusinessRequest(Constants.API_CREATE_ORDER, accessToken, params);
     }
 
     // 查询订单
@@ -69,7 +69,7 @@ public class BusinessApi {
         Map<String, String> params = new HashMap<>();
         params.put("single_order_query", singleOrderQuery);
 
-        return executeBusinessRequest("aliexpress.trade.ds.order.get", accessToken, params);
+        return executeBusinessRequest(Constants.API_QUERY_ORDER, accessToken, params);
     }
 
     // 查询订单物流状态
@@ -78,7 +78,7 @@ public class BusinessApi {
         params.put("ae_order_id", aeOrderId);
         params.put("language", language == null ? "en_US" : language);
 
-        return executeBusinessRequest("aliexpress.ds.order.tracking.get", accessToken, params);
+        return executeBusinessRequest(Constants.API_QUERY_ORDER_TRACKING, accessToken, params);
     }
 
 
