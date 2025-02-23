@@ -1,5 +1,8 @@
 package ds.ae.richard.simplesdk.api;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import ds.ae.richard.simplesdk.api.business.BusinessApi;
 import ds.ae.richard.simplesdk.api.system.SystemApi;
 import ds.ae.richard.simplesdk.model.TokenResponse;
@@ -56,4 +59,21 @@ public class AeDropShipperClient {
     public String queryFreight(String accessToken, String queryDeliveryReq) throws Exception {
         return businessApi.queryFreight(accessToken, queryDeliveryReq);
     }
+
+    // 创建订单
+    public String createOrder(String accessToken, String dsExtendRequest, String paramPlaceOrderRequest) throws Exception {
+        return businessApi.createOrder(accessToken, dsExtendRequest, paramPlaceOrderRequest);
+    }
+
+    // 查询订单
+    public String queryOrder(String accessToken, String singleOrderQuery) throws Exception {
+        return businessApi.queryOrder(accessToken, singleOrderQuery);
+    }
+
+    // 查询订单物流状态
+    public String queryOrderTracking(String accessToken, String aeOrderId, String language) throws Exception {
+        return businessApi.queryOrderTracking(accessToken, aeOrderId, language);
+    }
+
+
 }

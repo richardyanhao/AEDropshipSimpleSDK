@@ -55,6 +55,33 @@ public class BusinessApi {
         return executeBusinessRequest("aliexpress.ds.freight.query", accessToken, params);
     }
 
+    // 创建订单
+    public String createOrder(String accessToken, String dsExtendRequest, String paramPlaceOrderRequest) throws Exception {
+        Map<String, String> params = new HashMap<>();
+        params.put("ds_extend_request", dsExtendRequest);
+        params.put("param_place_order_request4_open_api_d_t_o", paramPlaceOrderRequest);
+
+        return executeBusinessRequest("aliexpress.ds.order.create", accessToken, params);
+    }
+
+    // 查询订单
+    public String queryOrder(String accessToken, String singleOrderQuery) throws Exception {
+        Map<String, String> params = new HashMap<>();
+        params.put("single_order_query", singleOrderQuery);
+
+        return executeBusinessRequest("aliexpress.trade.ds.order.get", accessToken, params);
+    }
+
+    // 查询订单物流状态
+    public String queryOrderTracking(String accessToken, String aeOrderId, String language) throws Exception {
+        Map<String, String> params = new HashMap<>();
+        params.put("ae_order_id", aeOrderId);
+        params.put("language", language == null ? "en_US" : language);
+
+        return executeBusinessRequest("aliexpress.ds.order.tracking.get", accessToken, params);
+    }
+
+
     private String executeBusinessRequest(String apiPath, String accessToken, Map<String, String> additionalParams) throws ApiException {
         try {
 
