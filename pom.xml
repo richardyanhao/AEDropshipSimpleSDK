@@ -10,10 +10,10 @@
     </parent>
     <groupId>io.github.richardyanhao</groupId>
     <artifactId>simple-sdk</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>simple-sdk</name>
-    <description>simple-sdk</description>
-    <url/>
+    <description>simple sdk for aliexpress dropship api</description>
+    <url>https://github.com/richardyanhao/AEDropshipSimpleSDK.git</url>
     <licenses>
         <license>
             <name>The Apache License, Version 2.0</name>
