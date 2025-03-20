@@ -1,13 +1,14 @@
 package ds.ae.richard.simplesdk.api.business;
-
+import java.io.File;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Base64;
 import java.util.Objects;
 import java.util.stream.Collectors;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
 import ds.ae.richard.simplesdk.api.ApiClient;
 import ds.ae.richard.simplesdk.api.ApiException;
 import ds.ae.richard.simplesdk.api.ApiResponse;
@@ -16,6 +17,8 @@ import ds.ae.richard.simplesdk.utils.Constants;
 import ds.ae.richard.simplesdk.utils.SignatureUtil;
 
 import com.google.gson.Gson;
+
+import javax.print.attribute.standard.NumberUp;
 
 /**
  * @author Richard Yan
@@ -54,7 +57,106 @@ public class BusinessApi {
 
         return executeBusinessRequest(Constants.API_FREIGHT_QUERY, accessToken, params);
     }
+    //AliexpressDsFeedItemidsGet
+    public String getDsFeedItemIds(String accessToken, Number pageSize,String feedName, String searchId) throws Exception {
+        Map<String, String> params = new HashMap<>();
+        params.put("page_size", pageSize.toString());
+        params.put("feed_name", feedName);
+        params.put("search_id", searchId);
+        return executeBusinessRequest(Constants.API_DS_FEED_ITEMIDS_GET, accessToken, params);
+    }
+    //AliexpressDsAddressGet
+    public String getDsAliexpressAddress(String accessToken, String language,String countryCode ,String isMultiLanguage) throws Exception {
+        Map<String, String> params = new HashMap<>();
+        params.put("language",language);
+        params.put("countryCode",countryCode);
+        params.put("isMultiLanguage",isMultiLanguage);
 
+        return executeBusinessRequest(Constants.API_DS_ALIEXPRESS_ADDRESS_GET,accessToken, params);
+    }
+    //AliexpressDsImageSearchV2
+
+    public String dsImageSearchV2(
+            String accessToken,
+            String imagePath,    // 新增：本地图片路径参数
+            String currency,
+            String lang,
+            String sortType,
+            String sortOrder,
+            String shipTo,
+            String searchType
+    ) throws Exception {
+
+        String imageBase64 = convertImageToBase64(imagePath);
+        Map<String, String> param0Map = new HashMap<>();
+        param0Map.put("image_base64", imageBase64); // 强制校验非空
+        param0Map.put("currency", currency);
+        param0Map.put("lang", lang);
+        param0Map.put("sort_type", sortType);
+        param0Map.put("sort_order", sortOrder);
+        param0Map.put("ship_to", shipTo);
+        param0Map.put("search_type",searchType);
+
+        String param0Json = new ObjectMapper().writeValueAsString(param0Map);
+        Map<String, String> params = new HashMap<>();
+        params.put("param0", param0Json);
+        return executeBusinessRequest(
+                Constants.API_DS_IMAGE_SEARCH,
+                accessToken,
+                params
+        );
+    }
+
+    private String convertImageToBase64(String imagePath) throws IOException {
+        File file = new File(imagePath);
+        if (!file.exists()) {
+            throw new IOException("图片文件不存在: " + imagePath);
+        }
+        return Base64.getEncoder()
+                .encodeToString(
+                        java.nio.file.Files.readAllBytes(file.toPath())
+                );
+    }
+
+//————————————————————————————————————————————————
+    //AliexpressDsCategoryGet
+    public String dsCategoryGet(String accessToken, String categoryId, String language, String app_signature) throws Exception {
+        Map<String, String> params = new HashMap<>();
+        params.put("categoryId",categoryId);
+        params.put("language",language);
+        params.put("app_signature",app_signature);
+
+        return executeBusinessRequest(Constants.API_DS_CATEGORY_GET, accessToken, params);
+    }
+    //AliexpressDsFeednameGet
+    public String feednameGet(String accessToken, String app_signature) throws Exception {
+        Map<String, String> params = new HashMap<>();
+        params.put("app_signature",app_signature);
+
+        return executeBusinessRequest(Constants.API_DS_FEEDNAME_GET, accessToken, params);
+    }
+    //aliexpress.ds.member.benefit.get
+    public String memberBenfitGet(String accessToken ) throws Exception {
+       Map<String, String> params = new HashMap<>();
+
+        return executeBusinessRequest(Constants.API_DS_MEMBER_BENFIT_GET, accessToken, params);
+    }
+    //AliexpressDsTextSearch
+    public String textSearch(String accessToken, String keyWord, String local, String countryCode, Number categoryId, String sortBy, Number pageSize, Number pageIndex, String currency, String searchExtend) throws Exception{
+        Map<String, String> params = new HashMap<>();
+        params.put("keyWord",keyWord);
+        params.put("local",local);
+        params.put("countryCode",countryCode);
+        params.put("categoryId", categoryId.toString());
+        params.put("sortBy",sortBy);
+        params.put("pageSize",pageSize.toString());
+        params.put("pageIndex",pageIndex.toString());
+        params.put("currency",currency);
+        params.put("searchExtend",searchExtend);
+
+
+        return executeBusinessRequest(Constants.API_DS_TEXT_SEARCH, accessToken, params);
+    }
     // 创建订单
     public String createOrder(String accessToken, String dsExtendRequest, String paramPlaceOrderRequest) throws Exception {
         Map<String, String> params = new HashMap<>();
