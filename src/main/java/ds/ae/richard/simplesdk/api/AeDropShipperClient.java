@@ -6,6 +6,7 @@ import java.util.Map;
 import ds.ae.richard.simplesdk.api.business.BusinessApi;
 import ds.ae.richard.simplesdk.api.system.SystemApi;
 import ds.ae.richard.simplesdk.model.TokenResponse;
+import ds.ae.richard.simplesdk.utils.Constants;
 
 /**
  * @author Richard Yan
@@ -22,6 +23,7 @@ public class AeDropShipperClient {
 
     /**
      * create token
+     *
      * @param code
      * @return TokenResponse
      * @throws ApiException
@@ -32,6 +34,7 @@ public class AeDropShipperClient {
 
     /**
      * refresh token
+     *
      * @param refreshToken
      * @return TokenResponse
      * @throws ApiException
@@ -42,6 +45,7 @@ public class AeDropShipperClient {
 
     /**
      * getProductDetails
+     *
      * @param accessToken
      * @param productId
      * @param shipToCountry
@@ -52,7 +56,7 @@ public class AeDropShipperClient {
      * @throws ApiException
      */
     public String getProductDetails(String accessToken, String productId, String shipToCountry,
-        String targetCurrency, String targetLanguage, boolean removePersonalBenefit) throws Exception {
+                                    String targetCurrency, String targetLanguage, boolean removePersonalBenefit) throws Exception {
         return businessApi.getProductDetails(accessToken, productId, shipToCountry, targetCurrency, targetLanguage, removePersonalBenefit);
     }
 
@@ -75,5 +79,46 @@ public class AeDropShipperClient {
         return businessApi.queryOrderTracking(accessToken, aeOrderId, language);
     }
 
+    public String getDsFeedItemIds(String accessToken, Number pageSize, String feedName, String searchId) throws Exception {
+        return businessApi.getDsFeedItemIds(accessToken, pageSize, feedName, searchId);
+    }
+
+    public String getDsAliexpressAddress(String accessToken, String language, String countryCode, String isMultiLanguage) throws Exception {
+        return businessApi.getDsAliexpressAddress(accessToken, language, countryCode, isMultiLanguage);
+    }
+
+    public String dsCategoryGet(String accessToken, String categoryId, String language, String app_signature) throws Exception {
+        return businessApi.dsCategoryGet(accessToken, categoryId, language, app_signature);
+
+    }
+
+    public String feednameGet(String accessToken, String app_signature) throws Exception {
+        return businessApi.feednameGet(accessToken, app_signature);
+    }
+
+    public String memberBenfitGet(String accessToken) throws Exception {
+        return businessApi.memberBenfitGet(accessToken);
+    }
+
+    public String textSearch(String accessToken, String keyWord, String local, String countryCode, Number categoryId, String sortBy, Number pageSize, Number pageIndex, String currency, String searchExtend) throws Exception {
+        return businessApi.textSearch(accessToken, keyWord, local, countryCode, categoryId, sortBy, pageSize, pageIndex, currency, searchExtend);
+    }
+
+    public String dsImageSearchV2(
+            String accessToken,
+            String imagePath,
+            String currency,
+            String lang,
+            String sortType,
+            String sortOrder,
+            String shipTo,
+            String searchType
+    ) throws Exception {
+        return businessApi.dsImageSearchV2(
+                accessToken, imagePath,currency, lang, sortType, sortOrder, shipTo, searchType
+        );
+    }
+
 
 }
+
