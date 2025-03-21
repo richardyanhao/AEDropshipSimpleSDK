@@ -20,6 +20,8 @@ import com.google.gson.Gson;
 
 import javax.print.attribute.standard.NumberUp;
 
+import static ds.ae.richard.simplesdk.utils.Constants.API_DS_IMAGE_SEARCH;
+
 /**
  * @author Richard Yan
  * @date 2025/2/22 15:32
@@ -89,7 +91,7 @@ public class BusinessApi {
 
         String imageBase64 = convertImageToBase64(imagePath);
         Map<String, String> param0Map = new HashMap<>();
-        param0Map.put("image_base64", imageBase64); // 强制校验非空
+        param0Map.put("image_base64", imageBase64);
         param0Map.put("currency", currency);
         param0Map.put("lang", lang);
         param0Map.put("sort_type", sortType);
@@ -101,7 +103,7 @@ public class BusinessApi {
         Map<String, String> params = new HashMap<>();
         params.put("param0", param0Json);
         return executeBusinessRequest(
-                Constants.API_DS_IMAGE_SEARCH,
+                API_DS_IMAGE_SEARCH,
                 accessToken,
                 params
         );
@@ -193,7 +195,14 @@ public class BusinessApi {
             String sign = SignatureUtil.generateSignature(additionalParams, clientSecret, apiPath, clientId);
             additionalParams.put("sign", sign);
 
-            ApiResponse response = apiClient.get(Constants.BASE_URL_FOR_BUSINESS, additionalParams);
+            ApiResponse response = null;
+
+            if (API_DS_IMAGE_SEARCH.equalsIgnoreCase(apiPath)) {
+                response = apiClient.post(Constants.BASE_URL_FOR_BUSINESS, additionalParams);
+            } else {
+                response = apiClient.get(Constants.BASE_URL_FOR_BUSINESS, additionalParams);
+            }
+
             if (response.getStatusCode() == 200) {
                 return response.getBody();
             } else {
