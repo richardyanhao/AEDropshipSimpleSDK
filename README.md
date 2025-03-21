@@ -53,7 +53,7 @@ client_secret=YOUR_CLIENT_SECRET
 
 # Usage
 ```
-import 
+import ds.ae.richard.simplesdk.api.AeDropShipperClient;
 
 public class Main {
     public static void main(String[] args) {
