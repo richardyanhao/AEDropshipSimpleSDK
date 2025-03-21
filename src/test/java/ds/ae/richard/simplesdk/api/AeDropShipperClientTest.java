@@ -64,7 +64,7 @@ class AeDropShipperClientTest {
 //
 //            //Business API usage
 //            String accessToken = refreshedTokenResponse.getAccessToken();
-            String accessToken = "";
+            String accessToken = "50000601339tcAyeuejuguOkAjCy7MyuhjmNJyDzwlD5ltRiuop1d6aa8cfQjFK8Y3LN";
 
 //             Get product details
 //            String productId = "1005004275827894";
@@ -93,16 +93,16 @@ class AeDropShipperClientTest {
 //            String queryOrder = client.queryOrder(accessToken,single_order_query);
 //            System.out.println("queryOrder"+queryOrder);
 
-//             dsImageSearchV2
-//            String imagePath = "/Users/indigo/Desktop/1.png";
-//            String currency = "USD";
-//            String lang = "en_US";
-//            String sort_type = "orders";
-//            String sort_order= "desc";
-//            String ship_to = "US";
-//            String search_type = "same";
-//            String dsImageSearchV2 = client.dsImageSearchV2(accessToken, imagePath, currency, lang, sort_type, sort_order, ship_to, search_type);
-//            System.out.println("dsImageSearchV2"+dsImageSearchV2);
+            //dsImageSearchV2
+            String imagePath = "/Users/yanhao/Downloads/S3ecf5f434c894110854aeec9c010df99y.webp";
+            String currency = "USD";
+            String lang = "en_US";
+            String sort_type = "orders";
+            String sort_order= "desc";
+            String ship_to = "US";
+            String search_type = "same";
+            String dsImageSearchV2 = client.dsImageSearchV2(accessToken, imagePath, currency, lang, sort_type, sort_order, ship_to, search_type);
+            System.out.println("dsImageSearchV2"+dsImageSearchV2);
 //          aliexpress.ds.feed.itemids.get
 //            String pageSizeStr = "200";
 //            Integer pageSize = Integer.parseInt(pageSizeStr);
