@@ -66,7 +66,7 @@ public class BusinessApi {
         params.put("page_size", pageSize.toString());
         params.put("feed_name", feedName);
         params.put("search_id", searchId);
-        return executeBusinessRequest(Constants.API_DS_FEED_ITEMIDS_GET, accessToken, params);
+        return executeBusinessRequest(Constants.API_DS_FEED_ITEM_IDS_GET, accessToken, params);
     }
 
     // 获取地址
@@ -132,14 +132,14 @@ public class BusinessApi {
         Map<String, String> params = new HashMap<>();
         params.put("app_signature", appSignature);
 
-        return executeBusinessRequest(Constants.API_DS_FEEDNAME_GET, accessToken, params);
+        return executeBusinessRequest(Constants.API_DS_FEED_NAME_GET, accessToken, params);
     }
 
     // 获取会员福利
     public String memberBenfitGet(String accessToken) throws Exception {
         Map<String, String> params = new HashMap<>();
 
-        return executeBusinessRequest(Constants.API_DS_MEMBER_BENFIT_GET, accessToken, params);
+        return executeBusinessRequest(Constants.API_DS_MEMBER_BENEFIT_GET, accessToken, params);
     }
 
     // 文本搜索

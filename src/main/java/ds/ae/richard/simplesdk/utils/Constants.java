@@ -21,11 +21,11 @@ public class Constants {
     public static final String API_CREATE_ORDER = "aliexpress.ds.order.create";
     public static final String API_QUERY_ORDER = "aliexpress.trade.ds.order.get";
     public static final String API_QUERY_ORDER_TRACKING = "aliexpress.ds.order.tracking.get";
-    public static final String API_DS_FEED_ITEMIDS_GET = "aliexpress.ds.feed.itemids.get";
+    public static final String API_DS_FEED_ITEM_IDS_GET = "aliexpress.ds.feed.itemids.get";
     public static final String API_DS_ALIEXPRESS_ADDRESS_GET = "aliexpress.ds.address.get";
     public static final String API_DS_IMAGE_SEARCH = "aliexpress.ds.image.searchV2";
     public static final String API_DS_CATEGORY_GET = "aliexpress.ds.category.get";
-    public static final String API_DS_FEEDNAME_GET = "aliexpress.ds.feedname.get";
-    public static final String API_DS_MEMBER_BENFIT_GET = "aliexpress.ds.member.benefit.get";
+    public static final String API_DS_FEED_NAME_GET = "aliexpress.ds.feedname.get";
+    public static final String API_DS_MEMBER_BENEFIT_GET = "aliexpress.ds.member.benefit.get";
     public static final String API_DS_TEXT_SEARCH = "aliexpress.ds.text.search";
 }
