@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>io.github.richardyanhao</groupId>
-    <artifactId>simple-sdk</artifactId>
+    <artifactId>AEDropshipSimpleSDK</artifactId>
     <version>1.0.0</version>
     <name>simple-sdk</name>
     <description>simple sdk for aliexpress dropship api</description>
@@ -94,5 +94,11 @@
             </plugin>
         </plugins>
     </build>
-
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub richardyanhao Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/richardyanhao/AEDropshipSimpleSDK</url>
+        </repository>
+    </distributionManagement>
 </project>
