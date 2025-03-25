@@ -10,7 +10,7 @@
     </parent>
     <groupId>io.github.richardyanhao</groupId>
     <artifactId>AEDropshipSimpleSDK</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.1-NEW-RELEASE</version>
     <name>AEDropshipSimpleSDK</name>
     <description>simple sdk for aliexpress dropship api</description>
     <url>https://github.com/richardyanhao/AEDropshipSimpleSDK.git</url>
@@ -67,6 +67,10 @@
 
     <build>
         <plugins>
+            <plugin>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>3.1.3</version> <!-- 升级到最新版本 -->
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
